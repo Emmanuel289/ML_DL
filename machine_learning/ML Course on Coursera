@@ -1,0 +1,44 @@
+Machine Learning Course on Coursera
+
+1- Applications of Machine Learning
+a- Speech recognition
+b - Computer Vision for Maps
+c- Image Classification
+d- Ads
+e - Virtual reality
+f - Autonomous Vehicles
+g - Healthcare, Agriculture, E-Commerce
+h - Just about every industry is using ML today
+
+2 - What is Machine Learning - "Field of study that gives computers the ability to learn without being explicitly programmed" (Arthur Samuel - 1959)
+
+3 - Main types of ML algorithms -> Supervised and Unsupervised Learning (Recommender Systems, Reinforcement Learning etc)
+
+Supervised Learning refers to algorithms that learn x->y or input-output mappings from data. In Supervised learning, the computer is given tons of input examples that
+are labelled as correct / incorrect answers to learn from, and use to solve prediction, classification, or other types of problems.
+SL applications include spam filtering, speech recognition, machine translation, and advertisements, autonomous cars
+In autonomous driving systems, the provided input can be images and radar info from which the car can learn positions of other cars in its vicinity to safely navigate 
+its surroundings.
+One major application of SL is Regression e.g. predicting the price of a house using its area or other metadata available from examples of similar houses 
+Another application is Classification, e.g. classifying an object as a cat / non-cat based on examples of cat images, detecting cancerous tumors based on examples of 
+cancerous tumors / non-cancerous tumor
+
+Unsupervised Learning refers to algorithms where computers are trained with unlabelled examples. The computers have to extract useful insights or interesting patterns from the example data which it can apply to problems. An example application of UL is in clustering algorithms where inputs with similar features are clustered together. Clustering is
+used in Google news to group related news stories together.
+Another application of clustering is in genetic analysis to group individuals into different "types" where individuals in each type exhibit similar characteristics or traits.
+Another application is used in customer-centric companies to group customers into different market segments to better serve them. One more examples is anomaly detection used in detecting unusual activities or patterns in data such as analysing customer transactions to detect fraud in financial institutions.
+
+4- Regression vs Classification -> Regression fits a line (linear) or curve (polynomial) on some example input-output data to predict some number or value. An example of  linear regression is predicting the price of a house in a given location based on the size of the house, given examples of houses and their respective sizes in that location.
+Regression predicts some value out of an infinite or large number of possible values while Classification predicts categories or classes that are drawn from a small number of possible outputs
+
+5- Nomenclature in ML -> Inputs (x) are called features and outputs (y) are called labels or targets. The example inputs-outputs (x_i, y_i) used in training are called the training set and m is the number of training examples where i ranges from 1 -> m. y = f(x) defines the model where f is a function that encapsulates the learning algorithm. y^ (yhat) is an estimated output from the algorithm f, given an input x
+
+how does f look like mathematically? For a linear regression, y = f(w, b, x) = w*x + b where w is a weight value and b is a bias
+
+In one-variable or univariate linear regression, there is only one feature x, while in multivariate linear regression, there are multiple features x1, x2, ..., xn
+
+The cost function J(w,b) measures the performance of a model by comparing the actual target y with its estimate y^. Mathematically, the error in an estimate is (y^ - y)
+THe square of the error for each ith example is (y_i^ - y_i)^2. By convention, the cost is averaged over the m training examples i.e. (1 /(2 m)) sum_(1, m)(y_i^ - y_i)^2.
+This is also called a squared error cost function. Replacing y^ by f(w, b), J(w, b) = (1 / (2 m))* sum_(1, m)(f(w, b)_i - y_i)^2.
+The goal of regression is to find (w, b) for the i examples that minimizes the squared error (y^_i - y_i) i.e. min_(w,b) J(w, b)
+
