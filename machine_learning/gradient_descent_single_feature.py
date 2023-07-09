@@ -1,6 +1,6 @@
 
 """
-Given m inputs (features) x, m corresponding outputs (targets), y and a machine learning
+Given m inputs (features) x, m corresponding outputs (targets) y, and a machine learning
 model f given by the equation y = f(x, w, b) = wx + b where w and b are the weight and bias, 
 respectively,
 The cost function in computing estimates y^ is given by 
@@ -14,23 +14,27 @@ where alpha is the learning rate. The updates in w and b are repeated until conv
 # Example of predicting the price of a house using gradient descent
 
 import math
-import copy
 import numpy as np
 import matplotlib.pyplot as plt
-from multiprocessing import Process
 
 # load our data set
 x_train = np.array([1.0, 2.0])  # features representing sq ft area in 1000s
 # target values representing prices in 1000 dollars
 y_train = np.array([300.0, 500.0])
 
-print(x_train.shape[0])
-
-
-# Compute cost: J(w, b) = (1 /(2 m)) * sum_(1, m) * (f(w, b) - y)^2
 
 def compute_cost(x, y, w, b):
+    """
+    Computes the cost J(w, b) for linear regression:
+    J(w, b) = (1 /(2 m)) * sum_(1, m) * (f(w, b) - y)^2
 
+    Args:
+    x (nd array (m,)): Data, m examples
+    y (nd array (m,)): target values
+    w, b (scalar): model parameters
+    Returns:
+    total_cost (scalar): The total cost J(w,b)
+    """
     m = x.shape[0]
     cost = 0
 
@@ -43,23 +47,20 @@ def compute_cost(x, y, w, b):
     return total_cost
 
 
-# Compute gradients: dJ/dw = 1/m * sum_(1, m) * x (f(w, b) - y), dJ/db = 1/m * sum_(1, m) * (f(w, b) - y)
-
-
 def compute_gradient(x, y, w, b):
     """
-    Computes the gradient for linear regression
+    Computes the gradients dJ/dw, dJ/db for linear regression: 
+    dJ/dw = 1/m * sum_(1, m) * x (f(w, b) - y), dJ/db = 1/m * sum_(1, m) * (f(w, b) - y)
+
     Args:
     x (nd array (m,)): Data, m examples
     y (nd array (m,)): target values
     w, b (scalar): model parameters
 
     Returns:
-    dj_dw (scalar): The graJ(w, b) = (1 /(2 m)) * sum_(1, m) * (f(x, w, b) - y)^2dient of the cost w.r.t parameters w
+    dj_dw (scalar): The gradient of the cost w.r.t parameters w
     dj_db (scalar): The gradient of the cost w.r.t parameters b
     """
-
-    # Number of training examples
     m = x.shape[0]
     dj_dw = 0
     dj_db = 0
@@ -77,7 +78,6 @@ def compute_gradient(x, y, w, b):
 
 
 # Plot 1: Cost vs w
-
 w = np.arange(0, 450, 50)  # weights
 b = 100  # fixed bias
 costs = [compute_cost(x_train, y_train, w[i], b) for i in range(w.shape[0])]
@@ -95,15 +95,7 @@ def plot_cost_vs_w():
     plt.show()
 
 
-# # Run plot in a separate child process
-# proc = Process(target=plot_cost_vs_w)
-# proc.start()
-# proc.join(3)  # Wait for 3 seconds to visualize plot
-# proc.terminate()
-
-
 # Gradient descent
-
 
 def gradient_descent(x, y, w_in, b_in, alpha, num_iters, cost_function, gradient_function):
     """
@@ -125,7 +117,6 @@ def gradient_descent(x, y, w_in, b_in, alpha, num_iters, cost_function, gradient
       J_history (List): History of cost values
       p_history (list): History of parameters [w,b] 
       """
-
     # An array to store cost J and w's at each iteration primarily for graphing later
     J_history = []
     p_history = []
@@ -144,7 +135,7 @@ def gradient_descent(x, y, w_in, b_in, alpha, num_iters, cost_function, gradient
         if i < 100000:      # prevent resource exhaustion
             J_history.append(cost_function(x, y, w, b))
             p_history.append([w, b])
-        # Print cost every at intervals 10 times or as many iterations if < 10
+        # Print cost at intervals 10 times or as many iterations if < 10
         if i % math.ceil(num_iters/10) == 0:
             print(f"Iteration {i:4}: Cost {J_history[-1]:0.2e} ",
                   f"dj_dw: {dj_dw: 0.3e}, dj_db: {dj_db: 0.3e}  ",

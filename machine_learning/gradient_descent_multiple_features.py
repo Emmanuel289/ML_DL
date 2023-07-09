@@ -1,7 +1,7 @@
 
 """
-Given m inputs (features) x, m corresponding outputs (targets), y and a ml model f given by the equation y = f(x, w, b) = wx + b where w and b are the 
-weight and bias, respectively
+Given m inputs (features) x, m corresponding outputs (targets) y, and a model f given by the equation 
+y = f(x, w, b) = wx + b where w and b are the weight and bias, respectively
 The cost function in computing estimates y^ is given by J(w, b) = (1 /(2 m)) * sum_(1, m) * (f(x, w, b) - y)^2
 The equation for gradient descent is:
 w = w - alpha * dJ/dw = w - alpha * (1 / m) * sum_(1, m)x(f(w, b) - y)  --- (i)
@@ -15,7 +15,6 @@ import math
 import copy
 import numpy as np
 import matplotlib.pyplot as plt
-from multiprocessing import Process
 
 # load our data set
 X_train = np.array([[2104, 5, 1, 45], [1416, 3, 2, 40], [852, 2, 1, 35]])
@@ -30,20 +29,16 @@ print(f"w_init shape: {w_init.shape}, b_init type: {type(b_init)}")
 print(X_train.shape[0])
 
 
-# Compute cost: J(w, b) = (1 /(2 m)) * sum_(1, m) * (f(w, b) - y)^2
-
 def compute_cost(X, y, w, b):
     """
-    Computes the cost for linear regression
+    Computes the cost J(w, b) for linear regression where J(w, b) = (1 /(2 m)) * sum_(1, m) * (f(w, b) - y)^2
     Args:
     X (nd array (m, n)): Data, m examples with n features
     y (nd array (m,)): target values
     w, b (scalar): model parameters
-
     Returns:
     cost (scalar): cost
     """
-
     m = X.shape[0]
     cost = 0
 
@@ -56,12 +51,10 @@ def compute_cost(X, y, w, b):
     return cost
 
 
-# Compute gradients: dJ/dw = 1/m * sum_(1, m) * x (f(w, b) - y), dJ/db = 1/m * sum_(1, m) * (f(w, b) - y)
-
-
 def compute_gradient(X, y, w, b):
     """
-    Computes the gradient for linear regression 
+    Computes the gradients dJ/dw, dJ/db for linear regression where 
+    dJ/dw = 1/m * sum_(1, m) * x (f(w, b) - y), dJ/db = 1/m * sum_(1, m) * (f(w, b) - y)
     Args:
       X (ndarray (m,n)): Data, m examples with n features
       y (ndarray (m,)) : target values
@@ -77,7 +70,8 @@ def compute_gradient(X, y, w, b):
     dj_db = 0.
 
     for i in range(m):
-        err = (np.dot(X[i], w) + b) - y[i]
+        f_wb = np.dot(X[i], w) + b
+        err = f_wb - y[i]
         for j in range(n):
             dj_dw[j] = dj_dw[j] + err * X[i, j]
         dj_db = dj_db + err
@@ -87,7 +81,6 @@ def compute_gradient(X, y, w, b):
     return dj_db, dj_dw
 
 
-# Compute and display the gradient
 # Compute and display gradient
 tmp_dj_db, tmp_dj_dw = compute_gradient(X_train, y_train, w_init, b_init)
 print(f'dj_db at initial w,b: {tmp_dj_db}')
@@ -132,7 +125,7 @@ def gradient_descent(X, y, w_in, b_in, cost_function, gradient_function, alpha, 
         if i < 100000:      # prevent resource exhaustion
             J_history.append(cost_function(X, y, w, b))
 
-        # Print cost every at intervals 10 times or as many iterations if < 10
+        # Print cost at intervals 10 times or as many iterations if < 10
         if i % math.ceil(num_iters / 10) == 0:
             print(f"Iteration {i:4d}: Cost {J_history[-1]:8.2f}   ")
 
